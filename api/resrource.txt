@@ -1,0 +1,68 @@
+const express = require("express")
+const mongoose = require("mongoose");
+const { count } = require("mongoose/lib/model");
+const { MongoClient } = require('mongodb');
+
+// const dotenv = require("dotenv")
+// dotenv.config();
+
+const app = express();
+
+
+// mongoose.connect("mongodb+srv://snawaza243:sam1@cluster0.su1tzgx.mongodb.net/emedshop?retryWrites=true&w=majority")
+// .then(() => console.log("DB Connection Successful!")).catch((err) => { console.log(err) });
+
+// mongoose.connect("mongodb://localhost:27017/e-med-shop")
+// .then(() => console.log("DB Connection Successful!")).catch((err) => { console.log(err) });
+
+// const uri = "mongodb+srv://snawaza243:sam1@cluster0.su1tzgx.mongodb.net/blog?retryWrites=true&w=majority";
+// const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    const db = client.db('emedshop');
+    const collection = db.collection('users');
+
+    // Find the first document in the collection
+    const first = await collection.findOne();
+    console.log(first);
+  } finally {
+    // Close the database connection when finished or an error occurs
+    await client.close();
+  }
+}
+run().catch(console.error);
+
+
+
+// or as an es module:
+// import { MongoClient } from 'mongodb'
+
+// Connection URL
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+
+// Database Name
+const dbName = 'myProject';
+
+async function main() {
+  // Use connect method to connect to the server
+  await client.connect();
+  console.log('Connected successfully to server');
+  const db = client.db(dbName);
+  const collection = db.collection('documents');
+
+  // the following code examples can be pasted here...
+
+  return 'done.';
+}
+
+main()
+  .then(console.log)
+  .catch(console.error)
+  .finally(() => client.close());
+
+app.listen(5000, () => {
+    console.log("Backend is running ")
+})

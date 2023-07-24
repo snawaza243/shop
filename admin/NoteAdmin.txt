@@ -1,0 +1,38 @@
+"@material-ui/core": "^4.11.4",
+"@material-ui/icons": "^4.11.2"
+ "recharts": "^2.0.9",
+use material data table
+
+
+topbar component add in App
+sidebar component, new app.css add in App container
+home page add in App in container
+
+featured info component add in home 
+    revanue, sales and cost
+
+recharts library for chart
+chart component add in Home 
+
+widgetSm for new user list
+widgetLg for resent transaction 
+
+userList page 
+use react-router-dom
+make app router
+
+for user list page
+use material data table
+
+by on click edit goto individual user with id
+
+add route  with /user/:userId return User page
+
+new user page 
+
+add Link in sidebar component for navigate the users and products page
+
+now create productList page
+
+in App.ja
+set route link for products, productsId, new product

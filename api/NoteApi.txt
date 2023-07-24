@@ -1,0 +1,245 @@
+index.js
+node init
+
+npm i express mongoose dotenv nodemon
+
+auto run
+change "test": "echo \"Error: no test specified\" && exit 1" to "start": "nodemon index.js"
+npm start [for auto listening]
+
+import express create port
+
+connect mongoose
+mongodb
+default port 27017
+.env
+
+restful api
+
+test to write get method 
+// http://localhost:5000/api/user/usertest//to get the this address
+
+
+to test the post method  use postman
+exmaple:
+in user.js
+router.post("/userposttest",(req,res)=>{
+    const username = req.body.username;
+    console.log("User Name :"+username);
+})
+
+int index.js add new line to read json response
+app.use(express.json())
+
+
+in postmam
+add new
+post > proper address 
+// testing url from postman where userposttest is the post method key
+// http://localhost:5000/api/users/userposttest     
+
+chose param Body > raw > JSON (type)
+write yout body key and its value
+
+this is setted key in index.js
+    const username = req.body.username;
+    console.log("User Name :"+username);
+
+so in raw section write you value ok key in oject
+
+{
+    "username": "sam"
+}
+
+
+* Create models schema
+* create routes corresponding each schema
+    create and tested user creation  with register data
+        in register add verifyUser after the register with period 3d 3 day
+    then try CryptoJS for password encryption
+
+now create login data
+
+then add jsonwebtoken to get access token for a period
+
+register
+implement update
+    verifyUser and auth
+    update
+    process to check
+        login with created user copy the token
+        copy the created user id and put in url like localhost:5000/api/users/647d50ed7400f0d954449d67
+        in header param add new key and value as toke and token value that recently copied
+        then check on key token 
+        in param body write the username and its updated value like 
+        {"username": "samUpdate"}
+        then hit on the send
+
+
+delete method
+    done
+
+find user: this can find one user by id to the admin
+    create new user admin and make true to isAdmin
+    login admin user copy the access token 
+    goto new method GET and put URL localhost:5000/api/users/find/id        where id can be any user id 
+    put access token in this method > param > header > key token value copied access token
+
+    put any id string in the URL id string like localhost:5000/api/users/find/647d50ed7400f0d954449d67
+    you will get the id data 
+
+Get all users
+    if params has query ?new=true
+    then return new user with sorted and descending limit 1 or what ever
+    if not query then return all users
+
+    for all user :      localhost:5000/api/users
+    for user with query :      localhost:5000/api/users?new=true
+
+
+Get user stats: is used in admin dashboard
+    return the month and total
+    need the access token of admin true login access token in param > header > key token and value is access token
+    and GET method with url localhost:5000/api/users/stats
+
+finished user router
+-------------------------------------------
+
+
+
+=========================================
+start product.js route 
+here use Product models 
+import product route in index.js
+
+index.js
+const productRoute = require("./routes/auth)
+app.use("/api/products", productRoute)
+
+different operation
+create product
+update product
+delete product
+get product with id
+get product with new, query, category 
+
+
+
+1. CREATE Product : it will add new item
+
+API creation;
+post method to add new
+at root link of products 
+verifyTokenAndAdmin
+use Product model and req with body input
+try to save
+
+API verify in postman
+create new method
+POST > localhost:5000/api/products
+Params > Body > raw > JSON 
+{
+    "title":"CK tshirt",
+    "desc":"comfortable",
+    "img":"tshirt",
+    "categories":["tshirt", "man"],
+    "size": "M",
+    "color": "light green",
+    "price":"50"
+}
+200 OK
+
+
+2. update product : it will update item
+
+
+3. get a product
+
+4. get all product
+    get by new with limit :     localhost:5000/api/products?new=true
+    get by categories :         localhost:5000/api/products?category=women
+    get all           :         localhost:5000/api/products
+
+end Product 
+----------------------------------
+
+==========================
+start cart.js route
+
+
+----------------
+
+
+end cart 
+----------------------------------
+
+
+
+==========================
+start Order.js route
+
+
+
+api test 
+
+add add orders list 
+POST> localhost:5000/api/orders
+login token in header key token and value will be the  generated access token
+Body > raw > JSON
+{
+    "userId":"647d50ed7400f0d954449d67",
+    "products":[
+        {
+            "productId":"101",
+            "quantity": 5
+        },
+        {
+            "productId":"108",
+            "quantity":2
+        }
+    ],
+    "amount":400,
+    "address":"IND"
+}
+
+
+
+get income month
+GET > localhost:5000/api/orders/income
+login token in header key token and value will be the  generated access token
+
+
+----------------
+
+
+======================
+Now Payment :
+stripe
+
+create ac and 
+copy secret key 
+
+add stripe npm
+
+create stripe.js route
+
+
+post method take req, res,
+apply charge use charge create
+take body tokenId
+take body amount
+currency type
+after the obj return res err or success
+
+a function
+
+
+
+stripe Payment
+
+new stripe payment app
+strip account api private and public
+
+stripe payment checkout npm
+
+corse library

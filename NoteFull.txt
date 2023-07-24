@@ -1,0 +1,313 @@
+run client
+open db and change product size and color as array
+add more product using post 
+    for this 
+    login admin 
+    copy access token
+
+    open add product
+    put token in header key value
+    then fill the product data in product 
+
+goto client add react-router-dom
+navigate home /
+to render ProductList       /products   
+ro render prod+q            /products/:category
+to render one prod          /product/:id
+to render cart              /cart
+to render login and reg     /log      /register
+    handle logged in user to navigate user to home after login and clean url
+
+    for login page if get user logged in then redirect to home otherwise login
+    for register page if get user logged in then redirect to home otherwise register page
+
+
+
+now product list data  
+    add category as cat 
+
+in CategoryItem
+     add Link for navigate with product category 
+
+     <Link to={`/products/${item.cat}`}>
+
+as per category fetch data from api
+
+goto ProductList 
+
+filter 
+get category name use location hook from react-router
+
+  const location = useLocation();
+  console.log(location)
+
+get url then split from slash
+console.log(location.pathname.split("/")[2]) 
+
+now filter with selecting color or size of price by using state hook
+disable option
+pass name and onChange function  attribute in select keyword on color and size select tag
+  const handleFilter = (e)=>{
+    const value = e.target.value;
+    setFilter({
+      ...filter,
+      [e.target.name]: value,
+
+    });
+  };
+
+
+to sort with new, price use new use state hook and target the added value 
+<Select onChange={(e)=> setSort(e.target.value)}>
+            <Option value="newest">Newest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="desc">Price (desc)</Option>
+          </Select>
+
+then pass cat, filters and sort in Products.js components
+
+use new useState for products, filteredProducts
+
+in Products.js
+useEffect  implement that list on the change of the category 
+install axios
+
+click on filtered product got product page by take clicked id
+
+now create requestMethod.js for base url
+
+without requestMethod
+
+in Product.js
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/products/find/"+id
+        // const res = await axios.get(`http://localhost:5000/api/find/${id}`
+        );
+        setProduct(res.data);
+      } catch (err) {}
+    };
+    getProduct();
+  }, [id]);
+
+  then use as product.img
+
+with requestMethod
+
+in requestMethod.js
+
+import axios from 'axios'
+const BASE_URL = "http://localhost:5000/api/";
+
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0N2Q2ZjNkMzU2ODVhNDliMTEwOGRmYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4NjU3MDYyOSwiZXhwIjoxNjg2ODI5ODI5fQ.pFyYgyvciKOtkCjz7raSDOMx5WJmwK2gQcWyXHB1rMQ"
+
+export const publicRequest = axios.create({
+  baseURL: BASE_URL,
+});
+
+export const userRequest = axios.create({
+  baseURL: BASE_URL,
+  header: { token: `Bearer ${TOKEN}` },
+});
+
+in Product.js
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+    useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/"+id);
+        setProduct(res.data);
+      } catch (err) {}
+    };
+    getProduct();
+  }, [id]);
+
+
+
+create useEffect ans call backend data for a single product details like image title desc color size  with base url  and await with id reference
+
+with another useState control quantity by handleQuantity
+
+now set color onClick by useState 
+and size on change by useState
+
+after get the single product data from backend like img, title, desc, color, size,
+we can act and select product for buy or cart 
+like on a single product choose color select size set quantity then for click on cart and save data in cart implement redux
+
+not implementing redux for add to cart
+add onClick on add to cart a new method handleClick
+
+install @reduxjs/toolkit react-redux
+
+create redux folder in client>src
+create cartRedux.js
+
+import createSlice from reduxjs/toolkit
+
+const cartSlice = createSlice({
+    name: "cart",
+    initialState: {
+        products: [],
+        quantity: 0,
+        total: 0,
+    },
+    reducers: {
+        addProduct: (state, action) => {
+            state.quantity += 1;
+            state.products.push(action.payload.product);
+            state.total += action.payload.price;
+        }
+    }
+})
+
+//initialState will be used  in navbar
+export and new file add store
+in  store
+import {configureStore} from '@reduxjs/toolkit'
+import cartReducer from './cartRedux'
+export default configureStore({
+    reducer:{
+        cart: cartReducer,
+    },
+})
+
+
+
+then in App.js wrap with Provider to App and props store
+
+
+in navbar 
+new hook useSelector  in navbar and update badge
+
+now in Product page
+useDispatch on handleClick add to cart dispatch all color, size, etc
+
+add redux chrome extention to see
+
+
+
+
+part x21
+click on cart goto cart section
+
+in cart  show data from redux state by useSelector
+
+delete demo product leave one and map each product data in component elements 
+update product detail 
+
+add react-stripe-checkout for checkout
+
+copy public key and paste in env
+add checkout component in cart
+create token function and pass 
+
+
+
+in api stripe env add secret key
+
+in stripes
+this function return the payment detail 
+
+
+in client 
+Cart page
+access with useEffect with pass dependency stripeToken
+
+
+
+
+===================
+1:22:00
+
+login user login process redux
+
+client>src>redux
+
+
+1. creating userRedux.js
+
+create user slice using reduxjs toolkit with
+name: 
+initialState:{}
+reducer:{loginStart, loginSuccess, loginFailure}
+
+export all {loginStart, loginSuccess, loginFailure} = userRedux.action
+export default userRedux.reducer
+
+
+2. using created user redux in store.js
+
+add user a new reducer as userReducer to the userRedux
+
+
+
+3. created new api calls for login function
+
+add async function that takes dispatch, user and dispatch the loginStart
+and try the login request with post method 
+if success full then dispatch loginSuccess
+otherwise dispatch loginFailure
+create 
+
+
+4. on App.jsx page make user = false;
+
+then for test take user and pass from the client so need to set the input field take and check with db and response
+
+
+with useState track the user id and pass on login page input field
+in input tag add onChange setUser and setPass 
+
+on the login button at the same page
+add onClick and handleClick prevent default
+then sue login function from the userRedux and apiCalls 
+and pass the tracked user id and password to hte login function with dispatch, and user-pass
+
+edit some error showing while login
+
+
+
+====================================
+1:36 
+keep the logged in user data live for a session 
+using redux toolkit  persist user
+
+
+install redux-persist library
+
+
+implement in store from redux persist and import all required method from redux persist
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

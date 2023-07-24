@@ -1,0 +1,22 @@
+testing user.js
+const router = require("express").Router();
+
+router.get("/usertest", (req, res)=>{
+    res.send("user test successful");
+
+// testing url
+// http://localhost:5000/api/users/usertest     //to get the this address
+    
+});
+
+router.post("/userposttest",(req,res)=>{
+    const username = req.body.username;
+    console.log("User Name :"+username);
+
+
+// testing url from postman
+// http://localhost:5000/api/users/userposttest     
+
+})
+
+module.exports = router
