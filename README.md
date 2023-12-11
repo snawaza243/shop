@@ -1,6 +1,6 @@
 # SHOP
 
-Save Our Planet (SHOP) is an ecommerce web application built using the MERN (MongoDB, Express, React, Node.js) stack. The goal of this project is to promote sustainability and environmental consciousness by providing a platform for users to shop for eco-friendly and sustainable products.
+SHOP is an ecommerce web application built using the MERN (MongoDB, Express, React, Node.js) stack. The goal of this project is to promote sustainability and environmental consciousness by providing a platform for users to shop for eco-friendly and sustainable products.
 
 ## Tech Stacks
 
